@@ -70,10 +70,17 @@
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="text-xl font-bold text-orange-600">৳{{ number_format($product['price']) }}</span>
-                        <button onclick="event.preventDefault(); /* Add to cart logic */" class="add-to-cart-btn flex items-center px-4 py-2 bg-orange-600 text-white text-sm font-medium rounded-xl hover:bg-orange-700 transition duration-150 shadow-md">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            Add
-                        </button>
+                        <form action="{{ route('cart.add') }}" method="POST" class="inline">
+                            @csrf
+                            {{-- Hidden fields for product ID and quantity (default to 1) --}}
+                            <input type="hidden" name="product_id" value="{{ $product['id'] }}">
+                            <input type="hidden" name="quantity" value="1">
+
+                            <button type="submit" class="add-to-cart-btn flex items-center px-4 py-2 bg-orange-600 text-white text-sm font-medium rounded-xl hover:bg-orange-700 transition duration-150 shadow-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                Add
+                            </button>
+                        </form>
                     </div>
                 </div>
             </a>
