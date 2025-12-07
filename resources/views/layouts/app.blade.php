@@ -42,14 +42,46 @@
             </nav>
 
             <!-- Icons -->
-            <div class="flex items-center space-x-4">
-                <button aria-label="Search" class="p-2 rounded-full hover:bg-gray-100 transition duration-150">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                </button>
-                <button aria-label="Cart" class="p-2 rounded-full hover:bg-gray-100 transition duration-150 relative">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                    <span id="cart-count" class="absolute top-0 right-0 block h-3 w-3 rounded-full ring-2 ring-white bg-orange-500 text-white text-xs leading-none flex items-center justify-center p-0.5">3</span>
-                </button>
+                <form action="{{ route('search') }}" method="GET" class="flex items-stretch">
+                    <input 
+                        type="text" 
+                        name="query" 
+                        placeholder="Search products..."
+                        required
+                        class="border border-r-0 border-gray-300 rounded-l-md px-4 py-2 
+                            focus:outline-none focus:ring-2 focus:ring-brand-orange 
+                            transition duration-150"
+                    >
+                    
+                    <button type="submit" 
+                            class="bg-brand-orange text-white 
+                                px-4 py-2 
+                                rounded-r-md 
+                                hover:bg-orange-700 
+                                transition duration-150 
+                                flex items-center justify-center">
+                        
+                        <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                    </button>
+                </form>
+                @php
+                    // Fetch the cart data from the session
+                    $cart = Session::get('cart', []);
+                    // Calculate the total number of items (not unique products)
+                    $cartCount = array_sum(array_column($cart, 'quantity'));
+                @endphp
+
+                <a href="{{ route('checkout') }}" aria-label="Cart" 
+                    class="p-2 rounded-full hover:bg-gray-100 transition duration-150 relative">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                        
+                        @if ($cartCount > 0)
+                            <span id="cart-count" class="absolute top-0 right-0 inline-flex items-center justify-center h-4 w-4 rounded-full ring-2 ring-white bg-orange-500 text-white text-xs leading-none p-0.5 transform translate-x-1/4 -translate-y-1/4">
+                                {{ $cartCount }}
+                            </span>
+                        @endif
+                </a>
                 <button aria-label="Menu" class="md:hidden p-2 rounded-full hover:bg-gray-100 transition duration-150">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                 </button>

@@ -79,10 +79,49 @@
 
                 <!-- Action Buttons -->
                 <div class="flex space-x-4 pt-4">
-                    <button class="flex items-center justify-center flex-grow px-6 py-3 text-lg font-medium rounded-xl text-white bg-orange-600 hover:bg-orange-700 transition duration-300 shadow-lg shadow-orange-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                        Add to Cart
-                    </button>
+                    <form action="{{ route('cart.add') }}" method="POST" class="mt-8">
+    @csrf
+
+    {{-- Hidden product ID --}}
+    <input type="hidden" name="product_id" value="{{ $product['id'] }}">
+
+    <div class="flex items-center space-x-4 mb-8">
+        <label for="qty" class="text-gray-700 font-semibold shrink-0">Quantity:</label>
+
+        <div id="qty-control" class="flex items-center border border-gray-300 rounded-lg overflow-hidden shrink-0">
+            <button type="button" id="qty-minus" class="px-4 py-2 bg-gray-50 hover:bg-gray-100 transition duration-150 text-xl font-bold">-</button>
+            <input type="number" id="qty-input" name="quantity" value="1" min="1" max="{{ $product['stock'] }}" readonly class="w-16 text-center border-none focus:ring-0 focus:border-transparent p-2">
+            <button type="button" id="qty-plus" class="px-4 py-2 bg-gray-50 hover:bg-gray-100 transition duration-150 text-xl font-bold">+</button>
+        </div>
+
+        <span class="text-sm text-gray-500">({{ $product['stock'] }} in stock)</span>
+    </div>
+
+    <form action="{{ route('cart.add') }}" method="POST" class="mt-8">
+        @csrf
+
+        {{-- Hidden product ID --}}
+        <input type="hidden" name="product_id" value="{{ $product['id'] }}">
+
+        <div class="flex items-center space-x-4 mb-8">
+            <label for="qty" class="text-gray-700 font-semibold shrink-0">Quantity:</label>
+
+            <div id="qty-control" class="flex items-center border border-gray-300 rounded-lg overflow-hidden shrink-0">
+                <button type="button" id="qty-minus" class="px-4 py-2 bg-gray-50 hover:bg-gray-100 transition duration-150 text-xl font-bold">-</button>
+                <input type="number" id="qty-input" name="quantity" value="1" min="1" max="{{ $product['stock'] }}" readonly class="w-16 text-center border-none focus:ring-0 focus:border-transparent p-2">
+                <button type="button" id="qty-plus" class="px-4 py-2 bg-gray-50 hover:bg-gray-100 transition duration-150 text-xl font-bold">+</button>
+            </div>
+
+            <span class="text-sm text-gray-500">({{ $product['stock'] }} in stock)</span>
+        </div>
+
+        <button type="submit" 
+                id="add-to-cart-btn" 
+                class="w-full lg:w-3/4 bg-brand-orange text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+            Add to Cart
+        </button>
+    </form>
+</form>
                     <button class="p-3 border border-gray-300 rounded-xl text-gray-600 hover:bg-gray-50 transition duration-150 active:bg-gray-100" aria-label="Wishlist">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
                     </button>
