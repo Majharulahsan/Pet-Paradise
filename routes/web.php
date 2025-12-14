@@ -53,3 +53,7 @@ Route::get('/contact', function () {
 })->name('contact'); 
 
 
+Route::get('/appointment', function () {
+    return view('appointment');
+})->name('appointment.index');
+
