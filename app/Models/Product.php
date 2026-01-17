@@ -7,11 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = [
-        'name',
+        'title',       // Changed from 'name' to 'title' to match your migration
         'description',
+        'image',
+        'category',
         'price',
-        'stock',
+        'quantity',    // Changed from 'stock' to 'quantity' to match your migration
     ];
-
-    protected $table = 'products';
+    public function reviews()
+{
+    return $this->morphMany(Review::class, 'reviewable');
+}
 }

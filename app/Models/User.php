@@ -45,4 +45,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    /**
+ * Relationship: A User can have many Pets.
+ * Add this to app/Models/User.php
+ */
+public function pets(): \Illuminate\Database\Eloquent\Relations\HasMany
+{
+    return $this->hasMany(Pet::class);
+}
 }
